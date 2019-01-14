@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="domains.secutity.repository.SecurityDao">
+
+    <insert id="insertAccount" parameterType="domains.secutity.entity.Account" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_account(nickname,loginName,password,idCard,cellPhone,enabled)
+        VALUE (#{nickname},#{loginName},#{password},#{idCard},#{cellPhone},#{enabled})
+    </insert>
+
+    <update id="resetPassword">
+        UPDATE t_account set password = (#{password}) where loginName = (#{loginName})
+    </update>
+
+    <update id="makeAccountUnEnable">
+        UPDATE t_account set enabled = false where loginName = (#{loginName})
+    </update>
+
+    <update id="updateAccount">
+        UPDATE t_account set idCard = #{idCard},cellPhone=#{cellPhone},enabled=#{enabled}
+        WHERE loginName = #{loginName}
+    </update>
+
+    <select id="checkAccountExistByNickname" resultType="java.lang.Integer">
+        SELECT COUNT(1) from t_account WHERE nickname = (#{nickname})
+    </select>
+
+    <select id="checkAccountExistByloginName" resultType="java.lang.Integer">
+        SELECT COUNT(1) from t_account WHERE loginName = (#{loginName})
+    </select>
+
+    <select id="getAccountByLoginName" resultType="domains.secutity.entity.Account">
+        SELECT * FROM t_account WHERE loginName=(#{loginName})
+    </select>
+
+    <select id="getPasswordByLoginName" resultType="java.lang.String">
+        SELECT password from t_account where loginName = (#{loginName})
+    </select>
+
+    <select id="getAccountByNickname" resultType="domains.secutity.entity.Account">
+        SELECT * FROM t_account where nickname = (#{nickname})
+    </select>
+    <select id="obtainAllAccount" resultType="domains.secutity.entity.Account">
+        SELECT * FROM t_account
+        <if test="enabled !=null and enabled != '' ">
+            <where>
+                AND enabled = (#{enabled})
+            </where>
+        </if>
+    </select>
+
+    <select id="getAccountById" resultType="domains.secutity.entity.Account">
+        SELECT * FROM t_account WHERE id = #{accountId}
+    </select>
+
+    <select id="getAccountByCondition" resultType="domains.secutity.entity.Account">
+        SELECT * FROM t_account
+        <if test="condition!=null and condition!=''">
+            <where>
+                and ${condition} = #{searchValue}
+            </where>
+        </if>
+        <if test="enabled!=null and enabled!=''">
+            <if test="condition!=null and condition!=''">
+                    and enabled = ${enabled}
+            </if>
+            <if test="condition==null || condition==''">
+                <where>
+                    enabled = ${enabled}
+                </where>
+            </if>
+        </if>
+    </select>
+
+</mapper>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>SmartPro</artifactId>
+        <groupId>SmartPro</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>SmartPro</groupId>
+    <artifactId>bookPro</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>war</packaging>
+
+    <properties>
+        <!-- 设置项目编码编码 -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+<!--        &lt;!&ndash; spring版本号 &ndash;&gt;
+        <spring.version>4.3.5.RELEASE</spring.version>
+        &lt;!&ndash; mybatis版本号 &ndash;&gt;
+        <mybatis.version>3.4.1</mybatis.version>
+        &lt;!&ndash; jstl版本号 &ndash;&gt;
+        <jstl.version>1.2</jstl.version>-->
+        <!-- 谷歌提供的集合工具类版本号-->
+        <guava-version>20.0</guava-version>
+    </properties>
+
+    <dependencies>
+        <!--谷歌提供的集合框架的JAR-->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava-version}</version>
+        </dependency>
+        <!-- mybatis分页插件 -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <version>4.1.4</version>
+        </dependency>
+
+        <!-- Shiro 安全框架 -->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-core</artifactId>
+            <version>1.2.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-web</artifactId>
+            <version>1.2.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-ehcache</artifactId>
+            <version>1.2.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-quartz</artifactId>
+            <version>1.2.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring</artifactId>
+            <version>1.2.2</version>
+        </dependency>
+
+    </dependencies>
+
+</project>

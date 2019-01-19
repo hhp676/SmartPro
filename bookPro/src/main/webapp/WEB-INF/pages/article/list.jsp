@@ -146,7 +146,7 @@
     <jsp:include page="right.jsp"/>
 </article>
 <footer>
-    <p>Design by <a href="#">极简技术之道</a></p>
+       <jsp:include page="footer.jsp"/>
 </footer>
 </body>
 </html>

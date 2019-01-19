@@ -17,6 +17,9 @@
         <property name="jdbcUrl" value="${jdbc.url}"/>
         <property name="user" value="${jdbc.username}"/>
         <property name="password" value="${jdbc.password}"/>
+        <!--c3p0隔28800秒自动检测与数据库的连接（28800也是mysql的默认的连接超时时间-->
+        <property name="testConnectionOnCheckin" value="true"/>
+        <property name="idleConnectionTestPeriod" value="28800"/>
     </bean>
 
     <!-- 2.配置session工厂 -->

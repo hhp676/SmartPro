@@ -1,5 +1,6 @@
 package web.article;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
@@ -11,7 +12,6 @@ import domains.article.entity.*;
 import domains.menu.MenuService;
 import domains.menu.entity.Menu;
 import domains.secutity.entity.Account;
-import web.AbstractController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,20 +20,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import web.AbstractController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import static web.WebForwardConstant.*;
-import static web.WebURIMappingConstant.*;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static web.WebForwardConstant.*;
+import static web.WebURIMappingConstant.*;
 
 /**
  * Created by hhp on 2018/3/19.
@@ -57,6 +59,53 @@ public final class ArticleController extends AbstractController {
      */
     @RequestMapping(value = {URL_ARTICLE_LIST}, method = {GET})
     public ModelAndView home(HttpServletRequest request) {
+        //封装数据的map集合
+        final Map<String, Object> map = Maps.newHashMap();
+        try{
+            LOGGER.info("enter article list page");
+            //获取点击量最高的X篇文章
+            final List<Article> hotArticles = articleService.getArticleByClick(5);
+            LOGGER.info("page query for article");
+            //拿到用户需要的是哪一页的文章数据
+            String str_pageNo = request.getParameter("pageNo");
+            if (str_pageNo == null) {
+                PageHelper.startPage(1, 8);
+            } else {
+                PageHelper.startPage(Integer.parseInt(str_pageNo), 8);
+            }
+
+            //获取所有作者的所有文章
+            final List<Article> articles = articleService.getAllArticle(map);
+            final PageInfo<Article> pageInfo = new PageInfo<>(articles);
+            LOGGER.info("actually total size = {}", pageInfo.getTotal());
+            //处理时间格式,突然发现数据库设计不好，坑的就是代码
+            final int size = articles.size();
+            LOGGER.info("get Comment size for every Article");
+            for (int i = 0; i < size; i++) {
+                Article article = articles.get(i);
+                //处理时间
+                handleTime(article);
+                //处理评论，根据文章获取此文章的评论,突然感觉好消耗性能
+                List<Comment> comments = commentService.getCommentsByArticle(article);
+                article.setComments(comments);
+            }
+            //获取推荐的文章的id
+            final List<Long> articleIds = articleService.getRecommandArticleId();
+            //获取推荐的文章
+            final List<Article> recommandArticles = articleService.getRecommandArtice(articleIds);
+            map.put("articles", articles);
+            map.put("hotArticles", hotArticles);
+            map.put("pageInfo", pageInfo);
+            map.put("recommandArticles", recommandArticles);
+        }catch (Exception e){
+            LOGGER.error("获取list失败，错误信息 : " +e);
+        }
+        //关注点7：为JSP页面提供用于渲染的数据
+        return new ModelAndView(FWD_ARTICLE_LIST_HOME, map);
+    }
+
+    @RequestMapping(value = {"listt"}, method = {GET})
+    public JSON getlist(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.info("enter article list page");
         //获取点击量最高的X篇文章
         final List<Article> hotArticles = articleService.getArticleByClick(5);
@@ -93,8 +142,17 @@ public final class ArticleController extends AbstractController {
         map.put("hotArticles", hotArticles);
         map.put("pageInfo", pageInfo);
         map.put("recommandArticles", recommandArticles);
+        map.put("bol" , true);
         //关注点7：为JSP页面提供用于渲染的数据
-        return new ModelAndView(FWD_ARTICLE_LIST_HOME, map);
+//        return (JSON) JSON.toJSON(map);
+
+        try (PrintWriter writer = response.getWriter();) {
+            writer.write(JSON.toJSON(map).toString());
+            writer.flush();
+        } catch (IOException e) {
+            System.out.println("eee" + e);
+        }
+        return null;
     }
 
     /**

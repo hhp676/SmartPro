@@ -13,6 +13,8 @@
   <meta name="description" content="杨青个人博客，是一个站在web前端设计之路的女程序员个人网站，提供个人博客模板免费资源下载的个人原创网站。" />
   <meta name="keywords2" content="大宇再次感谢杨青个人博客，让我的前端页面不再烦恼，谢谢" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <%--360收录标签--%>
+  <meta name="360-site-verification" content="8510aa2cbbb515daae7b11ef7218368d" />
   <link href="<c:url value="/css/base.css"/>" rel="stylesheet">
   <link href="<c:url value="/css/index.css"/>" rel="stylesheet">
   <!--[if lt IE 9]>

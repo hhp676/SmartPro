@@ -36,10 +36,13 @@ public final class Article {
 
     private int isDel;
 
+    private  String recom; //是否推荐0：推荐 1：不推荐
+
+
     public Article() {
     }
 
-    public Article(String brief, String title, String content, String author, Date publishDate, Long categoryId, String imgnum, int isDel, String imgType) {
+    public Article(String brief, String title, String content, String author, Date publishDate, Long categoryId, String imgnum, int isDel, String imgType, String recom) {
         this.brief = brief;
         this.title = title;
         this.content = content;
@@ -47,6 +50,7 @@ public final class Article {
         this.publishDate = publishDate;
         this.imgnum = imgnum;
         this.isDel = isDel;
+        this.recom = recom;
         click = 0L;//新建的文章的点击量是0
         this.categoryId = categoryId;
         this.imgType = imgType;
@@ -59,7 +63,7 @@ public final class Article {
      * 添加了一个元素以后还返回自身的引用
      * sb.append('a').append('b');
      */
-    public Article(Long id, String brief, String title, String content, String author, Date publishDate, String time, Long click, Long categoryId, List<Comment> comments, String imgnum, int isDel, String imgType) {
+    public Article(Long id, String brief, String title, String content, String author, Date publishDate, String time, Long click, Long categoryId, List<Comment> comments, String imgnum, int isDel, String imgType, String recom) {
         this.id = id;
         this.brief = brief;
         this.title = title;
@@ -73,6 +77,7 @@ public final class Article {
         this.imgnum = imgnum;
         this.isDel = isDel;
         this.imgType = imgType;
+        this.recom = recom;
     }
 
     public Long getId() {
@@ -179,6 +184,14 @@ public final class Article {
         this.imgType = imgType;
     }
 
+    public String getRecom() {
+        return recom;
+    }
+
+    public void setRecom(String recom) {
+        this.recom = recom;
+    }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
@@ -193,6 +206,7 @@ public final class Article {
                 .add("imgnum", imgnum)
                 .add("isDel", isDel)
                 .add("imgtype", imgType)
+                .add("recom", recom)
                 .toString();
     }
 

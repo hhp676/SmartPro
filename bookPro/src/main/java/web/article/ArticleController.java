@@ -63,8 +63,15 @@ public final class ArticleController extends AbstractController {
         final Map<String, Object> map = Maps.newHashMap();
         try{
             LOGGER.info("enter article list page");
-            //获取点击量最高的X篇文章
+            //点击量高的X篇文章
             final List<Article> hotArticles = articleService.getArticleByClick(5);
+            //站长推荐的X篇文章
+            final List<Article> recomArticles = articleService.getArticleByRecom(5);
+            //最新的X篇文章
+            final List<Article> newArticles = articleService.getArticleByDate(5);
+
+            List<Banner> bannerList = articleService.getBannerList(4);
+
             LOGGER.info("page query for article");
             //拿到用户需要的是哪一页的文章数据
             String str_pageNo = request.getParameter("pageNo");
@@ -95,8 +102,11 @@ public final class ArticleController extends AbstractController {
             final List<Article> recommandArticles = articleService.getRecommandArtice(articleIds);
             map.put("articles", articles);
             map.put("hotArticles", hotArticles);
+            map.put("recomArticles", recomArticles);
+            map.put("newArticles", newArticles);
             map.put("pageInfo", pageInfo);
             map.put("recommandArticles", recommandArticles);
+            map.put("bannerList", bannerList);
         }catch (Exception e){
             LOGGER.error("获取list失败，错误信息 : " +e);
         }
@@ -165,58 +175,71 @@ public final class ArticleController extends AbstractController {
     @RequestMapping(value = {URL_ARTICLE_READ})
     //关注点10：解析动态参数
     public ModelAndView readArticle(@PathVariable("articleId") Long articleId) {
-        LOGGER.info("enter article detail page, articleId = {}", articleId);
-        final Article article = articleService.getArticleById(articleId);
-        //点击量增加1
-        Long click = article.getClick();
-        article.setClick(++click);
-        int i = articleService.updateArticle(article);
-        if (i == 1) {
-            LOGGER.info("点击量刷新，现在的点击量是={}", click);
-        }
-        //
-        //获取前一篇文章和后一篇文章
-        final Article previous = articleService.getPreviousArticle(articleId);
-        final Article next = articleService.getNextArticle(articleId);
-        //获取这篇文章的所有评论
-        final List<Comment> comments = commentService.getCommentsByArticle(article);
-        //关注点14：获取点击量最多的几篇文章
-        //热门文章
-        final List<Article> hotArticles = articleService.getArticleByClick(5);
-        //文章标签
-        final List<Tag> tags = articleService.getTagsByArticleId(articleId);
-        //根据文章的标签获取相似文章
-        final int size = tags.size();
-        final Map<String, Object> tagNames = Maps.newHashMap();
-        for (int j = 1; j <= size; j++) {
-            tagNames.put("tag" + j, tags.get(j - 1).getName());
-        }
-        //先获取到相似的标签
-        final List<Tag> tagList = articleService.getSimilarTag(tagNames);
-        //根据相似的标签的ID去获取此相似的文章
-        final List<Article> articles = Lists.newArrayList();
-
-        //获取推荐的文章的id
-        final List<Long> articleIds = articleService.getRecommandArticleId();
-        //获取推荐的文章
-        final List<Article> recommandArticles = articleService.getRecommandArtice(articleIds);
-        for (Tag tag : tagList) {
-            if (tag.getArticleId() != articleId) {
-                Article article1 = articleService.getArticleById(tag.getArticleId());
-                articles.add(article1);
-            }
-        }
-        LOGGER.info("similar article size = {}", articles.size());
-        handleTime(article);
         final Map<String, Object> map = Maps.newHashMap();
-        map.put("article", article);
-        map.put("comments", comments);
-        map.put("previous", previous);
-        map.put("next", next);
-        map.put("hotArticles", hotArticles);
-        map.put("tags", tags);
-        map.put("articles", articles);
-        map.put("recommandArticles", recommandArticles);
+        try {
+            LOGGER.info("enter article detail page, articleId = {}", articleId);
+            final Article article = articleService.getArticleById(articleId);
+            //点击量增加1
+            Long click = article.getClick();
+            article.setClick(++click);
+            int i = articleService.updateArticle(article);
+            if (i == 1) {
+                LOGGER.info("点击量刷新，现在的点击量是={}", click);
+            }
+            //
+            //获取前一篇文章和后一篇文章
+            final Article previous = articleService.getPreviousArticle(articleId);
+            final Article next = articleService.getNextArticle(articleId);
+            //获取这篇文章的所有评论
+            final List<Comment> comments = commentService.getCommentsByArticle(article);
+            //关注点14：获取点击量最多的几篇文章
+            //点击量高的X篇文章
+            final List<Article> hotArticles = articleService.getArticleByClick(5);
+            //站长推荐的X篇文章
+            final List<Article> recomArticles = articleService.getArticleByRecom(5);
+            //最新的X篇文章
+            final List<Article> newArticles = articleService.getArticleByDate(5);
+
+            //文章标签
+            final List<Tag> tags = articleService.getTagsByArticleId(articleId);
+            //根据文章的标签获取相似文章
+            final int size = tags.size();
+            final Map<String, Object> tagNames = Maps.newHashMap();
+            for (int j = 1; j <= size; j++) {
+                tagNames.put("tag" + j, tags.get(j - 1).getName());
+            }
+            //先获取到相似的标签
+            final List<Tag> tagList = articleService.getSimilarTag(tagNames);
+            //根据相似的标签的ID去获取此相似的文章
+            final List<Article> articles = Lists.newArrayList();
+
+            //获取推荐的文章的id
+            final List<Long> articleIds = articleService.getRecommandArticleId();
+            //获取推荐的文章
+            final List<Article> recommandArticles = articleService.getRecommandArtice(articleIds);
+            for (Tag tag : tagList) {
+                if (tag.getArticleId() != articleId) {
+                    Article article1 = articleService.getArticleById(tag.getArticleId());
+                    articles.add(article1);
+                }
+            }
+            LOGGER.info("similar article size = {}", articles.size());
+            handleTime(article);
+
+            map.put("article", article);
+            map.put("comments", comments);
+            map.put("previous", previous);
+            map.put("next", next);
+            map.put("hotArticles", hotArticles);
+            map.put("recomArticles", recomArticles);
+            map.put("newArticles", newArticles);
+            map.put("tags", tags);
+            map.put("articles", articles);
+            map.put("recommandArticles", recommandArticles);
+        }catch (Exception e){
+            LOGGER.info("获取详细数据出错 ： " + e);
+        }
+
         return new ModelAndView(FWD_ARTICLE_DETAIL, map);
     }
 

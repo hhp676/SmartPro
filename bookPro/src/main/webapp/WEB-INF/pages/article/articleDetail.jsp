@@ -1,11 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: hhp
-  Date: 2018/3/19
-  Time: 15:39
-  页面基础模版来源:http://www.yangqq.com/
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -13,7 +6,7 @@
 </head>
 <body>
 <header>
-    <title>极简技术之道</title>
+    <title>${article.title}</title>
     <jsp:include page="header.jsp"/>
 </header>
 <article>

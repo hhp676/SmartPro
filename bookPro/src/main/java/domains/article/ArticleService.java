@@ -1,6 +1,7 @@
 package domains.article;
 
 import domains.article.entity.Article;
+import domains.article.entity.Banner;
 import domains.article.entity.Tag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -71,6 +72,25 @@ public interface ArticleService {
      * @return 将文章放到List集合中
      */
     List<Article> getArticleByClick(Integer limit);
+
+    /**
+     * 获取站长推荐的X篇文章
+     *
+     * @param limit 指定条数
+     * @return 将文章放到List集合中
+     */
+    List<Article> getArticleByRecom(Integer limit);
+
+    /**
+     * 获取最新的X篇文章
+     *
+     * @param limit 指定条数
+     * @return 将文章放到List集合中
+     */
+    List<Article> getArticleByDate(Integer limit);
+
+    List<Banner> getBannerList(Integer limit);
+
 
     /**
      * 按照指定的情况获取文章

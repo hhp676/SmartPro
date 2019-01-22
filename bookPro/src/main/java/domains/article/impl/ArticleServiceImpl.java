@@ -4,6 +4,7 @@ package domains.article.impl;
 import com.google.common.collect.Lists;
 import domains.article.ArticleService;
 import domains.article.entity.Article;
+import domains.article.entity.Banner;
 import domains.article.entity.Tag;
 import domains.article.repository.ArticleDao;
 import domains.article.repository.CommentDao;
@@ -91,6 +92,24 @@ public final class ArticleServiceImpl implements ArticleService {
     public List<Article> getArticleByClick(Integer limit) {
         LOGGER.info("Service:getArticleByClick,limit={}", limit);
         return articleDao.getArticleByClick(limit);
+    }
+
+    @Override
+    public List<Article> getArticleByRecom(Integer limit) {
+        LOGGER.info("Service:getArticleByRecom,limit={}", limit);
+        return articleDao.getArticleByRecom(limit);
+    }
+
+    @Override
+    public List<Article> getArticleByDate(Integer limit) {
+        LOGGER.info("Service:getArticleByDate,limit={}", limit);
+        return articleDao.getArticleByDate(limit);
+    }
+
+    @Override
+    public List<Banner> getBannerList(Integer limit) {
+        LOGGER.info("Service:getBannerList,limit={}");
+        return articleDao.getBannerList(limit);
     }
 
     @Override

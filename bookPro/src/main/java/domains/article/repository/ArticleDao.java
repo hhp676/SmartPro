@@ -2,6 +2,7 @@ package domains.article.repository;
 
 
 import domains.article.entity.Article;
+import domains.article.entity.Banner;
 import domains.article.entity.Tag;
 
 import java.util.List;
@@ -60,6 +61,12 @@ public interface ArticleDao {
      * @return      �����·ŵ�List������
      */
     List<Article> getArticleByClick(Integer limit);
+
+    List<Article> getArticleByRecom(Integer limit);
+
+    List<Article> getArticleByDate(Integer limit);
+
+    List<Banner> getBannerList(Integer limit);
 
     /**
      * ��ȡǰһƪ����

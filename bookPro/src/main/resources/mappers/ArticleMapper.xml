@@ -36,7 +36,7 @@
     </select>
 
     <select id="getAllArticle" resultType="domains.article.entity.Article">
-        SELECT id,title,brief,author,publishDate,click,categoryId,imgnum, isdel, imgtype FROM t_article
+        SELECT id,title,brief,author,publishDate,click,categoryId,imgnum, isdel, imgtype, recom FROM t_article
         <if test="author !=null and author !='' ">
             <where>
                 AND author = (#{author})
@@ -45,10 +45,21 @@
         ORDER BY publishDate DESC
     </select>
 
-    <!-- 关注点15：根据文章点击量获取X篇文章-->
+    <!-- 关注点15：点击量高的文章-->
     <select id="getArticleByClick" resultType="domains.article.entity.Article">
-        SELECT * FROM t_article ORDER BY click DESC LIMIT 0,#{limit}
+        SELECT id,title,brief,author,publishDate,click,categoryId,imgnum, isdel, imgtype, recom FROM t_article ORDER BY click DESC LIMIT 0,#{limit}
     </select>
+
+    <!-- 关注点20：最新文章推荐-->
+    <select id="getArticleByDate" resultType="domains.article.entity.Article">
+        SELECT id,title,brief,author,publishDate,click,categoryId,imgnum, isdel, imgtype, recom FROM t_article ORDER BY publishDate DESC LIMIT 0,#{limit}
+    </select>
+
+    <!-- 关注点20：最新文章推荐-->
+    <select id="getArticleByRecom" resultType="domains.article.entity.Article">
+        SELECT id,title,brief,author,publishDate,click,categoryId,imgnum, isdel, imgtype, recom FROM t_article WHERE recom = 0  LIMIT 0,#{limit}
+    </select>
+
 
     <!-- 关注点18：获取前一篇文章，那么条件 id < 当前文章id 的第一篇文章-->
     <!-- 但是小于号是不能直接出现在mybatis的配置文件中的，所以需要转义-->
@@ -57,11 +68,17 @@
     </select>
 
     <select id="getNextArticle" resultType="domains.article.entity.Article">
-        SELECT * FROM t_article where id &gt;  #{currentArticleId} ORDER BY id ASC limit 0,1
+        SELECT  id,title,brief,author,publishDate,click,categoryId,imgnum, isdel, imgtype, recom  FROM t_article where id &gt;  #{currentArticleId} ORDER BY id ASC limit 0,1
     </select>
 
     <select id="getTagsByArticleId" resultType="domains.article.entity.Tag">
-        SELECT * FROM t_tag where articleId = #{articleId}
+        SELECT  * FROM t_tag where articleId = #{articleId}
+    </select>
+
+
+    <!-- 获取banner轮播图-->
+    <select id="getBannerList" resultType="domains.article.entity.Banner">
+        SELECT * FROM t_banner LIMIT 0,#{limit}
     </select>
 
     <!-- 关注点16 ： mybatis中使用模糊查询-->

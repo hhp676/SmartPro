@@ -2,7 +2,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-   <%-- <jsp:include page="baseStyle.jsp"/>--%>
+    <link rel="shortcut icon" href="<c:url value="/img/ico/icon.ico"/>">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="极简技术之道,极简技术,技术" />
+    <meta name="description" content="极简技术之道是致力于前沿技术以及行业领域内的精彩软文的分享交流网站，并提供资源免费下载的原创网站" />
+    <meta name="keywords2" content="原创,技术分享交流,技术原创网站" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 <header>
@@ -56,5 +61,6 @@
 <footer>
     <jsp:include page="footer.jsp"></jsp:include>
 </footer>
+<a href="#" class="cd-top">Top</a>
 </body>
 </html>

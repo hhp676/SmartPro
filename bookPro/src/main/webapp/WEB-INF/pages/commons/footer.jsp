@@ -12,7 +12,12 @@
     <title></title>
 </head>
 <body>
-<footer class="footer">
+<footer > <%--class="footer"--%>
+    <%--<body>--%>
+    <p>Powered by <a href="#">极简技术之道</a></p>
+    <p><span>鲁ICP备19001812号</span></p>
+    <p><span>版权所有 © 2019-2024 cnart001.cn All Rights Reserved </span></p>
+   <%-- </body>--%>
 </footer>
 <script src="<c:url value="/js/jquery.js"/>"></script>
 <script src="<c:url value="/js/js.js"/>"></script>

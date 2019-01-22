@@ -9,7 +9,7 @@
 }
 
 .loginBox {
-    width: 1000px;
+    /*width: 1000px;*/
     margin: 0 auto;
     background: url("../img/login_bg.jpg") 0 0 no-repeat;
 }

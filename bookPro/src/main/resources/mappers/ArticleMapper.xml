@@ -36,7 +36,7 @@
     </select>
 
     <select id="getAllArticle" resultType="domains.article.entity.Article">
-        SELECT * FROM t_article
+        SELECT id,title,brief,author,publishDate,click,categoryId,imgnum, isdel, imgtype FROM t_article
         <if test="author !=null and author !='' ">
             <where>
                 AND author = (#{author})

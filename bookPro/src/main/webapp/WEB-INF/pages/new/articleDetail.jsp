@@ -2,6 +2,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <%--360收录标签--%>
+    <meta name="360-site-verification" content="8510aa2cbbb515daae7b11ef7218368d" />
+
     <link rel="shortcut icon" href="<c:url value="/img/ico/icon.ico"/>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="keywords" content="极简技术之道,极简技术,技术" />

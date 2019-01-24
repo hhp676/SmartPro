@@ -12,14 +12,14 @@ import domains.article.entity.*;
 import domains.menu.MenuService;
 import domains.menu.entity.Menu;
 import domains.secutity.entity.Account;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import uk.org.lidalia.slf4jext.Logger;
+import uk.org.lidalia.slf4jext.LoggerFactory;
 import web.AbstractController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,6 +36,11 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static web.WebForwardConstant.*;
 import static web.WebURIMappingConstant.*;
+
+
+
+/*import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;*/
 
 /**
  * Created by hhp on 2018/3/19.

@@ -29,9 +29,9 @@ public final class WebForwardConstant {
 
     public static final String FWD_SECURITY_ACCOUNT_REGISTER = "security/register";
 
-    public static final String FWD_ARTICLE_LIST_HOME ="article/list";
+    public static final String FWD_ARTICLE_LIST_HOME ="new/main"; // "article/list";
 
-    public static final String FWD_ARTICLE_DETAIL = "article/articleDetail";
+    public static final String FWD_ARTICLE_DETAIL = "new/articleDetail"; //"article/articleDetail";
 
     public static final String FWD_ARTICLE_POSTEDIT = "article/postedit";
 

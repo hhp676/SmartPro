@@ -3,6 +3,20 @@
 <html>
 <head>
      <script src="<c:url value="/js/new/jquery.min.js"/>"></script>
+    <script type="text/javascript">
+        debugger
+        (function() {
+            var s = "_" + Math.random().toString(36).slice(2);
+            document.write('<div style="" id="' + s + '"></div>');
+            (window.slotbydup = window.slotbydup || []).push({
+                id: "u3964403",
+                container:  s
+            });
+        })();
+        window.Console("sssss" +s);
+    </script>
+    <!-- 多条广告如下脚本只需引入一次 -->
+    <script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/i.js" async="async" defer="defer" ></script>
 </head>
 <body>
 
@@ -59,6 +73,7 @@
             <li class="wxpic"><a class="wx" href=""></a><img src="<c:url value="/img/new/vx.png"/> "></li>
         </ul>
     </div>
+
 </aside>
 
 </body>
